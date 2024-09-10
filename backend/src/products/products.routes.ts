@@ -22,6 +22,7 @@ export class ProductsRoutes {
         router.post('/:idCategory', [GetUser, VerifyAdmin], ProductValidation, validation, productsController.createProduct);
         router.get('/', productsController.getProducts);
         router.get('/:id', productsController.getProduct);
+        router.get('/category/:idCategory', productsController.getProductsByCategory);
         router.put('/:id',  [GetUser, VerifyAdmin], ProductValidation, validation, productsController.updateProduct);
         router.delete('/:id',  [GetUser, VerifyAdmin], productsController.deleteProduct);
 

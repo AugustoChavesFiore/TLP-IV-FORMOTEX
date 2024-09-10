@@ -39,6 +39,15 @@ export class ProductsController {
         }
     };
 
+    getProductsByCategory = async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const products = await this.productService.getProductsByCategory(req.params.idCategory);
+            return res.status(200).json(products);
+        } catch (error) {
+            return this.handleError(error, res);
+        }
+    };
+
     updateProduct = async (req: Request, res: Response): Promise<Response> => {
         try {
             await this.productService.updateProduct(req.params.id, req.body);

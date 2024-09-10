@@ -11,7 +11,8 @@ export class ProductsService implements IProductService {
     };
 
     async getProducts(): Promise<IProduct[]> {
-        return await Product.find();
+        return await Product.find()
+            .populate('category', { name: 1 });
     };
 
     async getProduct(id: string): Promise<IProduct> {
@@ -20,6 +21,11 @@ export class ProductsService implements IProductService {
 
         if (!product) throw new Error('Product not found');
         return product;
+    };
+
+    async getProductsByCategory(idCategory: string): Promise<IProduct[]> {
+        return await Product.find({ category: idCategory })
+            .populate('category', { name: 1 });
     };
 
     async updateProduct(id: string, product: IProduct): Promise<void> {
