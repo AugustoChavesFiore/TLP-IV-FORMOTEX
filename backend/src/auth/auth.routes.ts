@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserService } from '../users/user.service';
-import { GetUserMiddleware } from '../middlewares/getUser.middleware';
+import { GetUserMiddleware } from '../middlewares/User.middleware';
 import { loginSchema, registerSchema } from './Schemas/auth.schema';
 import { ExpressValidatorAdapter } from '../helpers/express-validator';
 
