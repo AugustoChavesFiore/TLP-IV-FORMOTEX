@@ -7,8 +7,8 @@ export class ProductsController {
     ) { }
 
     handleError = (error: any, res: Response) => {
+        if (error.code == 11000) return res.status(400).json({ error: 'Products already exists' });
         if (error instanceof Error) return res.status(400).json({ error: error.message });
-        if (error.code === 11000) return res.status(400).json({ error: 'Products already exists' });
         return res.status(500).json({ error: 'Internal Server Error' });
     };
 
