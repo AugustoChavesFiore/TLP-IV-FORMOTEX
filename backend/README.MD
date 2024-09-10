@@ -1,22 +1,16 @@
 
 
-# Basic Template Express-TS-POO(MongoDB)
+# Backend FORMOTEX
 
+## Servidor construido con una base de datos MongoDB 
 
-
-1. Clonar Repositorio
-```Bash
-$ git clone https://github.com/AugustoChavesFiore/Template-Express-TS-POO
-```
-
-2. Instalar dependencias
+1. Instalar dependencias
 ```Bash
 $ npm intall
 ```
-3. Renombrar el archivo `.env.template` a `.env `y completar variables de entorno
+2. Renombrar el archivo `.env.template` a `.env `y completar variables de entorno
 
-
-4. Ejecutar Proyecto en modo desarrollo
+3. Ejecutar Proyecto en modo desarrollo
 ```Bash
 $ npm run dev
 ```
