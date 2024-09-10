@@ -2,6 +2,7 @@
 import { Request, Response, Router } from 'express';
 import { UsersRoutes } from '../users/user.routes';
 import { AuthRoutes } from '../auth/auth.routes';
+import { ProductsRoutes } from '../products/products.routes';
 
 
 export class AppRouter {
@@ -15,6 +16,7 @@ export class AppRouter {
 
         router.use('/auth', AuthRoutes.routes);
         router.use('/users', UsersRoutes.routes);
+        router.use('/products', ProductsRoutes.routes);
         
         
 
