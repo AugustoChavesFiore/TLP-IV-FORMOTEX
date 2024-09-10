@@ -7,15 +7,14 @@ export class ProductsController {
     ) { }
 
     handleError = (error: any, res: Response) => {
-        if (error.code === 11000) {
-            return res.status(400).json({ error: 'Products already exists' });
-        }
+        if (error instanceof Error) return res.status(400).json({ error: error.message });
+        if (error.code === 11000) return res.status(400).json({ error: 'Products already exists' });
         return res.status(500).json({ error: 'Internal Server Error' });
     };
 
     createProduct = async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const product = await this.productService.createProduct(req.body);
+        try {            
+            const product = await this.productService.createProduct(req.body, req.params.idCategory);
             return res.status(201).json(product);
         } catch (error) {
             return this.handleError(error, res);

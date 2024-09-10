@@ -1,7 +1,8 @@
 import { Document } from "mongoose";
+import { ObjectId } from "mongodb";
 
 export interface IProductService {
-    createProduct(product: IProduct): Promise<IProduct>;
+   
     getProducts(): Promise<IProduct[]>;
     getProduct(id: string): Promise<IProduct>;
     updateProduct(id: string, product: IProduct): Promise<void>;
@@ -14,7 +15,7 @@ export interface IProduct extends Document {
     stock: number;
     description: string;
     image?: string | null;
-    category: string;
+    category: ObjectId;
     ubication: string;
 };
 

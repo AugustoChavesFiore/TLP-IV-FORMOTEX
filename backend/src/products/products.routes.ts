@@ -19,7 +19,7 @@ export class ProductsRoutes {
         const userMiddleware = new GetUserMiddleware(new UserService());
         const GetUser = userMiddleware.getUser;
         const VerifyAdmin = userMiddleware.verifyAdmin;
-        router.post('/', [GetUser, VerifyAdmin], ProductValidation, validation, productsController.createProduct);
+        router.post('/:idCategory', [GetUser, VerifyAdmin], ProductValidation, validation, productsController.createProduct);
         router.get('/', productsController.getProducts);
         router.get('/:id', productsController.getProduct);
         router.put('/:id',  [GetUser, VerifyAdmin], ProductValidation, validation, productsController.updateProduct);
