@@ -19,6 +19,7 @@ export class AuthService implements IAuthService {
         if (!isValidPassword) throw new Error('Invalid password');
         const token = await JwtAdapter.generateToken({ id: user._id as string });
         if (!token) throw new Error('Error generating token');
+        user.password = undefined;
         return { user, token };
     };
 
@@ -35,6 +36,8 @@ export class AuthService implements IAuthService {
     async checkToken(user: IUser): Promise<LoginUserResponse> {
         const token = await JwtAdapter.generateToken({ id: user._id as string });
         if (!token) throw new Error('Error generating token');
+
+        user.password = undefined;
         return { user, token };
     };
 
