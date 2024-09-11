@@ -1,19 +1,26 @@
 
+import { useEffect } from 'react';
 import './App.css'
-import { Button } from './components/shadcn/ui/button'
+import { useAuthStore } from './auth/store/auth.store';
+import { ThemeProvider } from './components/shadcn/theme-provider'
+import { AppRouter } from './router/AppRouter'
+import { AppLayout } from './UI/layout/AppLayout'
 
 function App() {
 
-  return (
-    <>
-      <Button
-        onClick={() => {
-          console.log('Button clicked')
-        }}
-        variant={'destructive'}
-      >Click me</Button>
+  const checkAuth = useAuthStore((state) => state.checkAuth);
 
-    </>
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+ 
+
+  return (
+    <ThemeProvider>
+      <AppLayout>
+        <AppRouter />
+      </AppLayout>
+    </ThemeProvider>
 
   )
 }
