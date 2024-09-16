@@ -6,7 +6,7 @@ export class CategoryController {
     constructor(private categoryService: CategoryService) { };
 
     handleErrors(error: any, res: Response) {
-        if (error.code === 11000) return res.status(400).json({ error: 'Category already exists' });
+        if (error.code === 11000) return res.status(409).json({ error: 'Category already exists' });
         if (error instanceof Error) return res.status(400).json({ error: error.message });
         return res.status(500).json({ error: 'Internal server error' });
     };
