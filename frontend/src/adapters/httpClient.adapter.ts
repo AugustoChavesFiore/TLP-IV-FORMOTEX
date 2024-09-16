@@ -22,6 +22,16 @@ class HttpClient {
     }
   };
 
+  async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+    try {
+      return await this.instance.put<T>(url, data, config);
+    }
+    catch (error: unknown) {
+      return this.handleError<T>(error);
+    }
+  };
+
+
   async patch<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     try {
       return await this.instance.patch<T>(url, data, config);

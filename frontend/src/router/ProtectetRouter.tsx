@@ -7,5 +7,5 @@ export const ProtectedRouter = () => {
 
   const user = useAuthStore((state) => state.user);
 
-  return user ? <Outlet /> : <Navigate to="/" />;
+  return user ? <Outlet /> : <Navigate to="/auth/login" />;
 };

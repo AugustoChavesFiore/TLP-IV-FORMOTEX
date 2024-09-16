@@ -18,7 +18,6 @@ export const MenuList = () => {
 
 
   const navigation = [
-    { title: 'Productos', path: '/' },
   ];
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);

@@ -3,7 +3,7 @@ import { AuthResponse, Auth } from "@/auth/interfaces/auth.interface";
 
 export class AuthRequest {
 
-    private static baseUrl = 'http://localhost:4500/api';
+    private static baseUrl = import.meta.env.VITE_API_URL;
 
     static async login(auth: Auth) {
         const response = await httpClientAdapter.post<AuthResponse>(`${this.baseUrl}/auth/login`, auth);
