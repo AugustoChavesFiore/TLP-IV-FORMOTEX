@@ -16,7 +16,7 @@ export class AuthService implements IAuthService {
         const user = await this.userServices.findByEmail(loginUser.email);
         if (!user) throw new Error('User not found');
         const isValidPassword = await BcryptAdapter.compare(loginUser.password, user.password!);
-        if (!isValidPassword) throw new Error('Invalid password');
+        if (!isValidPassword) throw new Error('Invalid password or email');
         const token = await JwtAdapter.generateToken({ id: user._id as string });
         if (!token) throw new Error('Error generating token');
         user.password = undefined;
