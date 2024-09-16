@@ -10,6 +10,7 @@ export class AuthController {
     };
 
     handleErrors(error: any, res: Response) {
+        if(error.message === 'Invalid password or email') res.status(401).json({ message: 'Invalid password or email' });
         if (error.code === 11000) {
             res.status(400).json({ message: 'User with that email already exists' });
         } else
