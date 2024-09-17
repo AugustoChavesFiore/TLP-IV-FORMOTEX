@@ -2,6 +2,9 @@ import { Server } from "./server";
 import { AppRouter } from "./router/AppRouter";
 import { enviroments } from "./config/envs";
 import { DB } from "./database/db";
+import { userSeed } from "./seed/user.seed";
+import { categorySeed } from "./seed/category.seed";
+import { organizationSeed } from "./seed/organization.seed";
 
 (
     async () => {
@@ -15,5 +18,8 @@ import { DB } from "./database/db";
         });
         await db.connect();
         server.start();
+        userSeed.seed()
+        categorySeed.seed()
+        organizationSeed.seed()
     }
 )()

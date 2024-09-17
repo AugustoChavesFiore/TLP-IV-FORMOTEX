@@ -22,9 +22,11 @@ export const MenuList = () => {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
-  if (user?.role === 'admin') {
+  if (user) {
     navigation.push({ title: 'Administración', path: '/administration' });
-    navigation.push({ title: 'Dashboard', path: '/dashboard' });
+    if (user.role === 'admin') {
+      navigation.push({ title: 'Dashboard', path: '/dashboard' });
+    }
   };
 
   const handleLogout = () => {

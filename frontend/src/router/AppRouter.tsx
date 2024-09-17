@@ -4,6 +4,7 @@ import { ProtectedRouter } from "./ProtectetRouter"
 import { InventoryRoutes } from "@/inventory/routes/InventoryRoutes"
 import { CategoriesRoutes } from "@/Categories/routes/CategoriesRoutes"
 import { AdministrationLayout } from "@/UI/layout/AdministrationLayout"
+import { OrganizationRoutes } from "@/organization/routes/OrganizationRoutes"
 
 
 export const AppRouter = () => {
@@ -19,6 +20,8 @@ export const AppRouter = () => {
           <Route index element={<Navigate to="inventory" />} />
           <Route path="inventory/*" element={<InventoryRoutes />} />
           <Route path="categories/*" element={<CategoriesRoutes />} />
+          <Route path="organizations/*" element={<OrganizationRoutes />} />
+
         </Route>
 
 

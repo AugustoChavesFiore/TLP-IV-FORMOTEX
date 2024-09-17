@@ -20,10 +20,10 @@ import { useEffect } from "react";
 
 const formSchema = z.object({
     name: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
+        message: "El nombre debe tener al menos 2 caracteres.",
     }),
     description: z.string().min(6, {
-        message: "Description must be at least 6 characters.",
+        message: "La descripción debe tener al menos 6 caracteres.",
     }),
 });
 
@@ -45,10 +45,10 @@ export const CategoryForm = () => {
 
     useEffect(() => {
         if (id) {
-           const category = getCategory(id);
-              if(category){
+            const category = getCategory(id);
+            if (category) {
                 return form.reset(category);
-              }
+            }
         }
         return form.reset({
             name: "",

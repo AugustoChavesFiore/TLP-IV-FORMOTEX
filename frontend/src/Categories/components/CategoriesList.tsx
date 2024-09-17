@@ -12,6 +12,7 @@ import {
 import { useCategoryStore } from "../store/CategoryStore";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/shadcn/ui/button";
+import { AlertDialogDelete } from "@/UI/components/AlertDialog";
 
 
 
@@ -39,19 +40,20 @@ export const CategoriesList = () => {
                             <TableCell>{category.description}</TableCell>
                             <TableCell>
                                 <Button variant={"link"} asChild>
-                                    <Link to={`edit/${category._id}`}>Edit</Link>
+                                    <Link to={`edit/${category._id}`}>Editar</Link>
                                 </Button>
-                                <Button variant={"destructive"} onClick={() => deleteCategory(category._id)}>Delete</Button>
+                                {/* <Button variant={"destructive"} onClick={() => deleteCategory(category._id)}>Delete</Button> */}
+                                <AlertDialogDelete title={"Eliminar"} handleDelete={() => deleteCategory(category._id)} />
                             </TableCell>
                         </TableRow>
                     )) : <TableRow>
-                        <TableCell colSpan={2}>No hay categorias</TableCell>
+                        <TableCell colSpan={3}>No hay categorias</TableCell>
                     </TableRow>
                 }
             </TableBody>
             <TableFooter>
                 <TableRow>
-                    <TableCell colSpan={2}>Total de categorias: {categories.length}</TableCell>
+                    <TableCell colSpan={3}>Total de categorias: {categories.length}</TableCell>
                 </TableRow>
             </TableFooter>
         </Table>

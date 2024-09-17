@@ -19,21 +19,21 @@ export class InventoryRequests {
         return response;
     };
 
-    static async createInventoryItem(product: InventoryCreate, idCategory: string, token: string) {
-        const response = await httpClientAdapter.post<Inventory>(`${this.baseUrl}/inventory/${idCategory}`, product, {
+    static async createInventoryItem(product: InventoryCreate, idCategory: string, idOrganization: string, token: string) {
+        const response = await httpClientAdapter.post<Inventory>(`${this.baseUrl}/inventory/${idCategory}/${idOrganization}`, product, {
             headers: {
-                Authorization: `${token}`
+                Authorization: `Bearer ${token}`
             }
         }
         );
         return response
-    };
+    }; 
 
     static async updateInventoryItem(product: Inventory, token: string) {
         const response = await httpClientAdapter.put(`${this.baseUrl}/inventory/${product._id}`, product,
             {
                 headers: {
-                    Authorization: `${token}`
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
@@ -44,7 +44,7 @@ export class InventoryRequests {
         const response = await httpClientAdapter.delete(`${this.baseUrl}/inventory/${id}`,
             {
                 headers: {
-                    Authorization: `${token}`
+                    Authorization: `Bearer ${token}`
                 }
             }
         );

@@ -4,6 +4,7 @@ import { UsersRoutes } from '../users/user.routes';
 import { AuthRoutes } from '../auth/auth.routes';
 import { InventoryRoutes } from '../inventory/inventory.routes';
 import { CategoryRoutes } from '../inventory-category/category.routes';
+import { OrganizationRoutes } from '../organization/organization.routes';
 
 
 export class AppRouter {
@@ -18,6 +19,7 @@ export class AppRouter {
           router.use('/users', UsersRoutes.routes);
           router.use('/inventory-category', CategoryRoutes.routes);
           router.use('/inventory', InventoryRoutes.routes);
+          router.use('/organization', OrganizationRoutes.routes);
           return router;
      };
 

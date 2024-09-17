@@ -18,7 +18,7 @@ export class AuthRequest {
     static async checkAuth(token: string) {
         const response = await httpClientAdapter.get<AuthResponse>(`${this.baseUrl}/auth/checkToken`, {
             headers: {
-                Authorization: `${token}`
+                Authorization: `Bearer ${token}`
             }
         });
         return response;

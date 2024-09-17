@@ -23,7 +23,7 @@ function App() {
   return (
     <ThemeProvider>
        <Toaster
-        position="bottom-right"
+        position="bottom-left"
         toastOptions={{
           duration: 3000,
         }}

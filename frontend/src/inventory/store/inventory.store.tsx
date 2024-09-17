@@ -38,11 +38,12 @@ export const useInventoryStore = create<InventoryStore>((set, get) => ({
 
     createInventory: async (inventory) => {
         set({ loading: true });
-        const response = await InventoryRequests.createInventoryItem({ ...inventory }, inventory.category, get().getToken());
+        const response = await InventoryRequests.createInventoryItem({ ...inventory }, inventory.category, inventory.organization, get().getToken());
+            console.log(response);
         if (response.status === 201) {
             set({ inventory: [...get().inventory, response.data], loading: false });
             toast.success('Producto creado');
-            return 
+            return
         };
         get().handleError(response.status);
     },

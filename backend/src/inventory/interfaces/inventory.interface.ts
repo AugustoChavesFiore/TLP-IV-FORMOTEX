@@ -1,8 +1,8 @@
-import { Document } from "mongoose";
+
 import { ObjectId } from "mongodb";
 
 export interface IInventoryService {
-    createInventory(inventory: IInventory, idCategory: string): Promise<IInventory>;
+    createInventory(inventory: IInventory, idCategory: string, idOrganization: string): Promise<IInventory>;
     getInventories(): Promise<IInventory[]>;
     getInventory(id: string): Promise<IInventory>;
     getInventoriesByCategory(idCategory: string): Promise<IInventory[]>;
@@ -10,13 +10,13 @@ export interface IInventoryService {
     deleteInventory(id: string): Promise<void>;
 }
 
-export interface IInventory extends Document {
+export interface IInventory {
     name: string;
     description: string;
     section: string;
     status: string;
     adquisitionDate: Date;
-    warranty: number;
     category: ObjectId;
+    organization: ObjectId;
 };
 

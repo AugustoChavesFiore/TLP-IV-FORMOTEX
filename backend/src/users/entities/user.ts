@@ -1,10 +1,10 @@
 
 import { Schema, model } from "mongoose";
-import { ValidRoles } from "../interface";
+import { IUser, ValidRoles } from "../interface";
 
 
 
-const UserSchema = new Schema({
+const UserSchema = new Schema<IUser>({
     name: {
         type: String,
         required: true

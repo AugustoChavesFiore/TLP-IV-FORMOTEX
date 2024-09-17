@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CategoryService } from "./category.service";
+import { CustomError } from "../errors/custom.errors";
 
 
 export class CategoryController {
@@ -7,8 +8,11 @@ export class CategoryController {
 
     handleErrors(error: any, res: Response) {
         if (error.code === 11000) return res.status(409).json({ error: 'Category already exists' });
-        if (error instanceof Error) return res.status(400).json({ error: error.message });
-        return res.status(500).json({ error: 'Internal server error' });
+        if (error instanceof CustomError) {
+            return res.status(error.statusCode).json({error: error.message});
+        }else{
+            return res.status(500).json({error:'Internal Server Error'});
+        }
     };
 
     findAll = async (req: Request, res: Response) => {

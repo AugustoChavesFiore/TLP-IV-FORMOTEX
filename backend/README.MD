@@ -14,4 +14,5 @@ $ npm intall
 ```Bash
 $ npm run dev
 ```
-
+## Detalles
+<strong> En modo desarrollo se crearan unas categorias y organizaciones de ejemplo para que se pueda probar la funcionalidad de inventario, dichas categorias y organizaciones tambien son funcionales para alta, baja y modificación. </strong>

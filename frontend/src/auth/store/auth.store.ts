@@ -42,6 +42,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         const response = await AuthRequest.checkAuth(token);
         if (response.status === 200) return get().handleLogin(response.data);
         get().handleError(response.status);
+        return get().logout();
 
     },
 

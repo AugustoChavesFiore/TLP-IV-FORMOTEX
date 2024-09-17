@@ -1,12 +1,13 @@
-import { Document } from "mongoose";
+import { Document, ObjectId } from "mongoose";
 
 
-export interface IUser extends Document {
+export interface IUser  {
+    _id?: string
     name: string;
     email: string;
     password?: string;
     role?: string;
-    
+
 };
 
 export interface IUserService {

@@ -11,7 +11,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
     isLoading: false,
     addCategory: async (category) => {
         set({ isLoading: true });
-        const response = await CategoryRequests.createCategory(category);
+        const response = await CategoryRequests.createCategory(category, get().getToken());
         if (response.status === 201) {
             set({ isLoading: false, cagegories: [...get().cagegories, response.data] });
             toast.success('Categoria creada');
@@ -43,8 +43,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
 
     deleteCategory: async (id) => {
         set({ isLoading: true });
-        const response = await CategoryRequests.deleteCategory(id);
-        console.log(response.status);
+        const response = await CategoryRequests.deleteCategory(id, get().getToken());
         if (response.status === 204) {
             const newCategories = get().cagegories.filter((category) => category._id !== id);
             set({ isLoading: false, cagegories: newCategories });
@@ -57,7 +56,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
 
     updateCategory: async (category) => {
         set({ isLoading: true });
-        const response = await CategoryRequests.updateCategory(category);
+        const response = await CategoryRequests.updateCategory(category, get().getToken());
         if (response.status === 204) {
             const newCategories = get().cagegories.map((cat) => {
                 if (cat._id === category._id) {
@@ -77,5 +76,14 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
         handleStatusErrors(statusCode);
         set({ isLoading: false });
     },
+
+    getToken: () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            get().handleError(401);
+            return '';
+        }
+        return token;
+    }
 
 }));

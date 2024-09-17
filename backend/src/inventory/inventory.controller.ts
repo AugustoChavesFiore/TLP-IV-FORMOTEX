@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import { InventoryService } from "./inventory.service";
+import { CustomError } from "../errors/custom.errors";
 
 export class InventoryController {
     constructor(
@@ -8,13 +9,17 @@ export class InventoryController {
 
     handleError = (error: any, res: Response) => {
         if (error.code == 11000) return res.status(409).json({ error: 'Inventory already exists' });
-        if (error instanceof Error) return res.status(400).json({ error: error.message });
-        return res.status(500).json({ error: 'Internal Server Error' });
+        if (error instanceof CustomError) {
+            return res.status(error.statusCode).json({error: error.message});
+        }else{
+            return res.status(500).json({error:'Internal Server Error'});
+        }
     };
 
     createInventory = async (req: Request, res: Response): Promise<Response> => {
+        const { idCategory, idOrganization } = req.params;	
         try {            
-            const inventory = await this.inventoryService.createInventory(req.body, req.params.idCategory);
+            const inventory = await this.inventoryService.createInventory(req.body, idCategory, idOrganization);
             return res.status(201).json(inventory);
         } catch (error) {
             return this.handleError(error, res);

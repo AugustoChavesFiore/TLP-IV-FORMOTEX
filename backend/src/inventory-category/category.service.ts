@@ -1,3 +1,4 @@
+import { CustomError } from "../errors/custom.errors";
 import { Category  } from "./entities/category.entity";
 import { ICategory, ICategoryService } from "./interface/category.interface";
 
@@ -12,7 +13,7 @@ export class CategoryService implements ICategoryService {
 
     async findOne(id: string): Promise<ICategory> {
         const category = await Category.findOne({ _id: id });
-        if(!category) throw new Error('Category not found');
+        if(!category) throw CustomError.NotFound('Category not found');
         return category;
     };
 
@@ -23,11 +24,11 @@ export class CategoryService implements ICategoryService {
 
     async update(id: string, category: ICategory): Promise<void> {
         const categoryUpdated = await Category.updateOne({ _id: id }, category);
-        if(categoryUpdated.modifiedCount === 0) throw new Error('Category not found');
+        if(categoryUpdated.modifiedCount === 0) throw CustomError.NotFound('Category not found');
     };
 
     async delete(id: string): Promise<void> {
         const categoryDeleted = await Category.deleteOne({ _id: id });
-        if(categoryDeleted.deletedCount === 0) throw new Error('Category not found');
+        if(categoryDeleted.deletedCount === 0) throw CustomError.NotFound('Category not found');
     };
 };

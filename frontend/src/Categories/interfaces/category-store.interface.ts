@@ -10,5 +10,6 @@ export interface CategoryStore {
     updateCategory: (category: Category) => Promise<void>;
     getCategory: (id: string) => Category | undefined;
     handleError: (statusCode: number) => void;
+    getToken: () => string;
 
 };

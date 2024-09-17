@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { AuthService } from "./auth.service";
+import { CustomError } from "../errors/custom.errors";
 
 
 
@@ -10,14 +11,14 @@ export class AuthController {
     };
 
     handleErrors(error: any, res: Response) {
-        if(error.message === 'Invalid password or email') res.status(401).json({ message: 'Invalid password or email' });
+        
         if (error.code === 11000) {
-            res.status(400).json({ message: 'User with that email already exists' });
-        } else
-        if (error instanceof Error) {
-            res.status(400).json({ message: error.message });
-        } else {
-            res.status(500).json({ message: 'An unknown error occurred' });
+            return res.status(400).json({ message: 'User with that email already exists' });
+        } 
+        if (error instanceof CustomError) {
+            return res.status(error.statusCode).json({error: error.message});
+        }else{
+            return res.status(500).json({error:'Internal Server Error'});
         }
     };
 

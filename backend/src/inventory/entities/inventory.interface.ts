@@ -28,6 +28,11 @@ const InventorySchema = new Schema<IInventory>({
         type: Schema.Types.ObjectId,
         ref: 'Category',
         required: true
+    },
+    organization: {
+        type: Schema.Types.ObjectId,
+        ref: 'Organization',
+        required: true
     }
   
 

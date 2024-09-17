@@ -3,6 +3,7 @@ import { IAuthService, LoginUser, LoginUserResponse } from "./interfaces/auth.in
 import { JwtAdapter } from "../helpers/JWT";
 import { BcryptAdapter } from "../helpers/bcrypt";
 import { IUser } from "../users/interface";
+import { CustomError } from "../errors/custom.errors";
 
 
 
@@ -16,9 +17,9 @@ export class AuthService implements IAuthService {
         const user = await this.userServices.findByEmail(loginUser.email);
         if (!user) throw new Error('User not found');
         const isValidPassword = await BcryptAdapter.compare(loginUser.password, user.password!);
-        if (!isValidPassword) throw new Error('Invalid password or email');
+        if (!isValidPassword) throw CustomError.Unauthorized('Invalid password');
         const token = await JwtAdapter.generateToken({ id: user._id as string });
-        if (!token) throw new Error('Error generating token');
+        if (!token) throw CustomError.InternalServer('Error generating token');
         user.password = undefined;
         return { user, token };
     };
@@ -29,21 +30,16 @@ export class AuthService implements IAuthService {
 
     async register(user: IUser): Promise<LoginUserResponse> {
         const newUser = await this.userServices.create(user);
-        if (!newUser) throw new Error('Error creating user');
+        if (!newUser) throw CustomError.InternalServer('Error creating user');
         return this.checkToken(newUser);
     };
 
     async checkToken(user: IUser): Promise<LoginUserResponse> {
         const token = await JwtAdapter.generateToken({ id: user._id as string });
-        if (!token) throw new Error('Error generating token');
-
+        if (!token) throw CustomError.InternalServer('Error generating token');
         user.password = undefined;
         return { user, token };
     };
-
-
-
-
 
 
 };

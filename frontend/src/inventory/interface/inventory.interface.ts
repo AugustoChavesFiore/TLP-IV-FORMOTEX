@@ -7,6 +7,7 @@ export interface Inventory {
     status: string;
     adquisitionDate: Date;
     category: string
+    organization: string
 };
 
 
@@ -17,5 +18,6 @@ export interface InventoryCreate {
     status: string;
     adquisitionDate: Date;
     category: string
+    organization: string
 };
 

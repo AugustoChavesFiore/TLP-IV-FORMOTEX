@@ -22,7 +22,7 @@ import { Input } from "@/components/shadcn/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
 import { useInventoryStore } from "../store/inventory.store";
@@ -31,29 +31,34 @@ import { Calendar } from "@/components/shadcn/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { es } from 'date-fns/locale'
 import { useCategoryStore } from "@/Categories/store/CategoryStore";
+import { useOrganizationStore } from "@/organization/store/Organization.store";
 
 
 
 const formSchema = z.object({
     name: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
+        message: "El nombre debe tener al menos 2 caracteres",
     }),
     description: z.string().min(6, {
-        message: "Description must be at least 6 characters.",
+        message: "La descripción debe tener al menos 6 caracteres",
     }),
     section: z.string().min(2, {
-        message: "Section must be at least 2 characters.",
+        message: "La sección debe tener al menos 2 caracteres",
     }),
     status: z.string().min(2, {
-        message: "Status must be at least 2 characters.",
+        message: "El estado debe tener al menos 2 caracteres",
     }),
     adquisitionDate: z.date()
         .refine((date) => date < new Date(), {
-            message: "Date must be in the past.",
+            message: "La fecha de adquisición no puede ser mayor a la fecha actual",
         }),
     category: z.string().min(2, {
-        message: "Category must be at least 2 characters.",
+        message: "La categoria debe tener al menos 2 caracteres",
+    }),
+    organization: z.string().min(2, {
+        message: "La organización debe tener al menos 2 caracteres",
     }),
 
 });
@@ -62,12 +67,11 @@ export const InventoryForm = ({ id }: { id?: string }) => {
 
     const navigate = useNavigate();
 
-    // const { id } = useParams();
-
     const createInventory = useInventoryStore((state) => state.createInventory);
     const updateInventory = useInventoryStore((state) => state.updateInventory);
     const getInventory = useInventoryStore((state) => state.getInventory);
     const categories = useCategoryStore((state) => state.cagegories);
+    const organizations = useOrganizationStore((state) => state.organizations);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -95,7 +99,7 @@ export const InventoryForm = ({ id }: { id?: string }) => {
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-
+        console.log(values);
         if (id) {
             await updateInventory({ ...values, _id: id });
 
@@ -138,7 +142,6 @@ export const InventoryForm = ({ id }: { id?: string }) => {
                         )}
                     />
                 </div>
-
                 <div className="col-span-2">
                     <FormField
                         control={form.control}
@@ -157,7 +160,7 @@ export const InventoryForm = ({ id }: { id?: string }) => {
                                                 )}
                                             >
                                                 {field.value ? (
-                                                    format(field.value, "PPP")
+                                                    format(field.value, "PPPP", { locale: es })
                                                 ) : (
                                                     <span>Seleccione la Fecha</span>
                                                 )}
@@ -267,8 +270,39 @@ export const InventoryForm = ({ id }: { id?: string }) => {
                         )}
                     />
                 </div>
+                <div className="col-span-4">
+                    <FormField
+                        control={form.control}
+                        name="organization"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Organización</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Selecione una organización" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            {organizations.map((organization) => (
+                                                <SelectItem key={organization._id} value={organization._id}>
+                                                    <SelectLabel>{organization.name}</SelectLabel>
+                                                </SelectItem>
+                                            ))}
 
-                <Button className="col-span-4" type="submit" variant={'secondary'} >
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                                <FormDescription>
+                                    Seleccione una organización
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                <Button className="col-span-4" type="submit" variant={'default'} >
                     Guardar
                 </Button>
             </form>
